@@ -1,0 +1,15 @@
+<div class="container my-5">
+  <h1>College Comparison Selection</h1>
+  <h5><i>Select the colleges you would like compared</i></h5>
+  <form class="mt-3" action="/compare" method="post">
+    {{#each collegeData}}
+    <div class="form-check">
+      
+      <input id="{{_id}}_checkbox" class="form-check-input" type="checkbox" value="" name="{{_id}}"/>
+      <label class="form-check-label" for="{{_id}}_checkbox">{{name}}</label>
+    </div>
+
+    {{/each}}
+    <button class="btn btn-primary mt-3" type="submit">Compare colleges</button>
+  </form>
+</div>

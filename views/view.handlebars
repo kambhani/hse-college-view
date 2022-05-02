@@ -1,0 +1,30 @@
+<div class="container my-5">
+  <input id="filter" type="text" class="form-control mb-3" placeholder="Filter colleges"/>
+  <div class="row p-0 m-0 justify-content-around">
+    {{#each collegeData}}
+
+    <div class="card border-primary p-2 mb-4 mx-1" style="width: 200px;">
+      <span class="d-none">{{name}}</span>
+      <img src="https://static.naviance.com/libraries/college-logos/{{pictureId}}.gif" alt="University logo for {{name}}" style="width: 100%; aspect-ratio: 1 /1;">
+      <div class="card-body text-center">
+        <a class="btn btn-primary" href="/view/{{_id}}">View data</a>
+      </div>
+    </div>
+
+    {{/each}}
+  </div>
+</div>
+
+<script>
+  document.getElementById('filter').addEventListener('input', function() {
+    const value = document.getElementById('filter').value.toLowerCase();
+    console.log(value);
+    document.querySelectorAll('.card').forEach((card) => {
+      if (card.querySelector('span').innerHTML.toLowerCase().includes(value)) {
+        card.classList.remove('d-none');
+      } else {
+        card.classList.add('d-none');
+      }
+    });
+  });
+</script>

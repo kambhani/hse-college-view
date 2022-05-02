@@ -1,0 +1,42 @@
+<div class="container my-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <div class="col-lg-9 p-3 p-lg-5 pt-lg-3">
+      {{#if message}}
+      
+      <h1 class="display-4 fw-bold lh-1">Operation Unsuccessful</h1>
+      <p class="lead">The requested operation was unsuccessful. The following information was given:</p>
+      <ul>
+        <li><b>Message: </b>{{message.error}}</li>
+        <li><b>Error: </b>{{message.code}}</li>
+      </ul>
+
+      {{else if successMessage}}
+
+      <h1 class="display-4 fw-bold lh-1">Operation Successful</h1>
+      <p class="lead">The requested operation was successful. {{successMessage}}</p>
+
+      {{else}}
+      
+      <h1 class="display-4 fw-bold lh-1">Add or update a college</h1>
+      <p class="lead">To add or update a college, enter your Naviance JWT and the desired college's Naviance ID below</p>
+
+      {{/if}}
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+        <form action="/update" method="post">
+          <div class="mb-3">
+            <label for="jwt" class="form-label">Naviance JWT</label>
+            <input type="text" class="form-control" id="jwt" name="jwt" aria-describedby="jwtInfo">
+            <div id="jwtInfo" class="form-text">Your Naviance JWT is only used for accessing the required data. Exercise caution when sharing JWTs online.</div>
+          </div>
+          <div class="mb-3">
+            <label for="uuid" class="form-label">College Naviance ID</label>
+            <input type="text" class="form-control" id="uuid" name="uuid">
+            <div class="form-text">Enter the desired college's Naviance id, <i>not its name</i></div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

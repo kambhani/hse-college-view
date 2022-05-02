@@ -1,0 +1,27 @@
+{
+  "name": "hse-college-view",
+  "version": "1.0.0",
+  "description": "A website designed to make it easy to view college data. Created with HSE students in mind.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kambhani/hse-college-view.git"
+  },
+  "author": "Anish Kambhampati",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/kambhani/hse-college-view/issues"
+  },
+  "homepage": "https://github.com/kambhani/hse-college-view#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
+    "mongoose": "^6.2.9",
+    "node-fetch": "^3.1.0"
+  }
+}

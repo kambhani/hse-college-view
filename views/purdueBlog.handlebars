@@ -1,0 +1,84 @@
+<div class="container my-5">
+  <h1>Purdue Admissions Data Comparison</h1>
+  <h4><i>A comparison between HSE and the general population</i></h4>
+  <h5 class="text-muted mb-4">May 1, 2022</h5>
+
+  <h3>Introduction</h3>
+  <p>Welcome! In this article, we will go over the admissions data from Purdue. We will look the rates of acceptance for HSE students as well as the overall population. Yield rates will also be examined. We'll leave off with some tips to maximize your chances of getting into Purdue. Enjoy!</p>
+
+  <h3>Admission Rate by Year</h3>
+  <p>Here, we will look at the admission rate. HSE data is pulled from Naviance while general population data is pulled from Purdue's common data set (CDS).</p>
+  <table id="acceptance-rate-table" class="table">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>HSE Admission Rate</th>
+        <th>General Admission Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data.applicationsByYear}}
+
+      <tr>
+        <td>{{year}}</td>
+        <td>{{percentage totalAccepted totalApplied}}%</td>
+        <td>-</td>
+      </tr>
+
+      {{/each}}
+    </tbody>
+  </table>
+  <p>Generally speaking, there appears to be no relationship between the HSE and general admission rate</p>
+
+  <h3>Yield Rate by Year</h3>
+  <p>Here, we will look at the yield rate. Again, HSE data is pulled from Naviance while general population data is pulled from Purdue's CDS. Note that part-time students are factored into these yield calculations.</p>
+  <table id="yield-rate-table" class="table">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>HSE Yield Rate</th>
+        <th>General Yield Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data.applicationsByYear}}
+
+      <tr>
+        <td>{{year}}</td>
+        <td>{{percentage totalEnrolled totalAccepted}}%</td>
+        <td>-</td>
+      </tr>
+
+      {{/each}}
+    </tbody>
+  </table>
+  <p>Generally speaking, HSE has a far higher yield rate than the general population, likely due to Purdue's proximity and academic strength.</p>
+
+  <h3>Tips for Getting In</h3>
+  <p>As with any selective college, there are steps you can take to maximize your chances of getting in. Some of these steps are:</p>
+  <ul>
+    <li>Ensuring good grade in core subjects (the higher the better)</li>
+    <li>Taking a well-balanced course load that includes courses in all core areas</li>
+    <li>Participating in one or more extracurricular activities, preferably with leadership</li>
+    <li>Taking the SAT and/or ACT and scoring well</li>
+    <li>Writing compelling essays that demonstrate maturity and fit</li>
+  </ul>
+
+  <h3>Final Thoughts</h3>
+  <p>I hope you enjoyed this walkthrough of Purdue admissions data. I hope to see you soon. Take care!</p>
+</div>
+
+<script>
+  // General population data
+  const applied = [29952, 27213, 30707, 29513, 30903, 30955, 39706, 45023, 48775, 48912, 53439, 54912, 57279, 59173];
+  const accepted = [21423, 19905, 19993, 20163, 18951, 18684, 23506, 26524, 27226, 28092, 30965, 32834, 38457, 40759];
+  const enrolled = [7063, 6042, 6513, 6684, 6291, 6283, 6372, 6812, 7242, 7566, 8357, 8056, 8869, 10157];
+
+  document.querySelectorAll('#acceptance-rate-table tr > td:last-child').forEach((td, index) => {
+    td.innerHTML = Math.round(accepted[index] / applied[index] * 1000) / 10 + '%';
+  });
+
+  document.querySelectorAll('#yield-rate-table tr > td:last-child').forEach((td, index) => {
+    td.innerHTML = Math.round(enrolled[index] / accepted[index] * 1000) / 10 + '%';
+  });
+</script>

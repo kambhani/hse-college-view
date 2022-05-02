@@ -1,0 +1,133 @@
+<div class="container my-5">
+  {{#if error}}
+
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <div class="col-lg-8 p-3 p-lg-5 pt-lg-3">
+      <h1 class="display-4 fw-bold lh-1">Error</h1>
+      <p class="lead">The requested college cannot be found</p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+        <a href="/view" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">View all colleges</a>
+      </div>
+    </div>
+  </div>
+
+  {{else}}
+
+  <div id="data" class="d-none">
+    <p id="college-name">{{data.name}}</p>
+    {{#each data.applicationsByYear}}
+
+    <div class="admissions-cycle">
+      <p class="year">{{year}}</p>
+      <p class="totalApplied">{{totalApplied}}</p>
+      <p class="totalAccepted">{{totalAccepted}}</p>
+      <p class="totalEnrolled">{{totalEnrolled}}</p>
+    </div>
+
+    {{/each}}
+  </div>
+  <h3 class="text-center">{{data.name}} Admission Statistics</h3>
+  <div>
+    <canvas id="chart" width="300"></canvas>
+  </div>
+
+  {{/if}}
+</div>
+
+<script>
+  // Grabbing the data from the HTML
+  let data = {
+    year: [],
+    totalApplied: [],
+    totalAccepted: [],
+    totalEnrolled: []
+  }
+  document.querySelectorAll('.admissions-cycle').forEach(admissionsCycle => {
+    const year = Number(admissionsCycle.querySelector(':scope > .year').innerHTML);
+    if (data.year.length !== 0) {
+      let prevYear = data.year[data.year.length - 1] + 1;
+      while (prevYear < year) {
+        data.year.push(prevYear);
+        data.totalApplied.push(0);
+        data.totalAccepted.push(0);
+        data.totalEnrolled.push(0);
+        prevYear++;
+      }
+    }
+    data.year.push(Number(admissionsCycle.querySelector(':scope > .year').innerHTML));
+    data.totalApplied.push(Number(admissionsCycle.querySelector(':scope > .totalApplied').innerHTML));
+    data.totalAccepted.push(Number(admissionsCycle.querySelector(':scope > .totalAccepted').innerHTML));
+    data.totalEnrolled.push(Number(admissionsCycle.querySelector(':scope > .totalEnrolled').innerHTML));
+  });
+
+  // Creating the chart
+  setCanvasHeight();
+  const ctx = document.getElementById('chart');
+  const config = {
+    type: 'line',
+    data: {
+      labels: data.year,
+      datasets: [
+        {
+          label: 'Total Applied',
+          data: data.totalApplied,
+          fill: false,
+          borderColor: 'rgb(63, 136, 197)',
+          tension: 0.1
+        },
+        {
+          label: 'Total Accepted',
+          data: data.totalAccepted,
+          fill: false,
+          borderColor: 'rgb(63, 125, 32)',
+          tension: 0.1
+        },
+        {
+          label: 'Total Enrolled',
+          data: data.totalEnrolled,
+          fill: false,
+          borderColor: 'rgb(114, 0, 38)',
+          tension: 0.1
+        }
+      ]
+    },
+    options: {
+      resizeDelay: 250
+    }
+  }
+  let chart = new Chart(ctx, config);
+
+  window.addEventListener('resize', function() {
+    chart.destroy();
+    setCanvasHeight();
+    chart = new Chart(ctx, config);
+  });
+
+  function setCanvasHeight() {
+    switch (true) {
+      case (window.screen.width < 450): {
+        document.getElementById('chart').height = 450;
+        break;
+      }
+      case (window.screen.width < 768): {
+        document.getElementById('chart').height = 300;
+        break;
+      }
+      case (window.screen.width < 992): {
+        document.getElementById('chart').height = 250;
+        break;
+      }
+      case (window.screen.width < 1200): {
+        document.getElementById('chart').height = 200;
+        break;
+      }
+      case (window.screen.width < 1400): {
+        document.getElementById('chart').height = 150;
+        break;
+      }
+      default: {
+        document.getElementById('chart').height = 100;
+      }
+    }
+  }
+</script>
